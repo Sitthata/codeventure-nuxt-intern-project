@@ -17,7 +17,7 @@
         <h3>Chapters</h3>
         <!-- All the lessons for the course listed here -->
       </div>
-      <div class="prose p-12 bg-red-50 rounded-md w-[65ch]">
+      <div class="prose p-12 bg-red-50 rounded-md max-w-[75ch]">
         <NuxtPage />
       </div>
     </div>
