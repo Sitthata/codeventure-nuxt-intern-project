@@ -14,14 +14,14 @@
       <div
         class="prose mr-4 p-8 bg-white rounded-md min-w-[20ch] flex flex-col"
       >
-        <h3 class="text-xl font-bold">Chapters</h3>
+        <h3 class="text-xl font-bold mb-5">Chapters</h3>
         <!-- All the lessons for the course listed here -->
         <div
           class="space-y-1 mb-4 flex flex-col"
           v-for="chapter in chapters"
           :key="chapter.slug"
         >
-          <h4>{{ chapter.title }}</h4>
+          <h4 class="text-lg font-semibold">{{ chapter.title }}</h4>
           <NuxtLink
             v-for="(lesson, index) in chapter.lessons"
             :key="lesson.slug"
