@@ -6,14 +6,36 @@
     />
     <div class="text-right">
       <div class="font-medium">{{ name }}</div>
-      <button class="text-sm underline text-slate-500">Log out</button>
+      <button @click="logout" class="text-sm underline text-slate-500">
+        Log out
+      </button>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 const user = useSupabaseUser();
-console.log(user.value);
+
+const { auth } = useSupabaseClient();
+
+const logout = async () => {
+  const { error } = await auth.signOut();
+
+  if (error) {
+    console.error("Error logging in with Github", error);
+  }
+
+  try {
+    await $fetch("/api/_supabase/session", {
+      method: "POST",
+      body: { event: "SIGNED_OUT", session: null },
+    });
+  } catch (error) {
+    console.error("Error logging out", error);
+  }
+
+  await navigateTo("/login");
+};
+
 const name = computed(() => user.value?.user_metadata.user_name);
-const email = computed(() => user.value?.user_metadata.email);
 const profile = computed(() => user.value?.user_metadata.avatar_url);
 </script>
