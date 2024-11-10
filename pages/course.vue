@@ -1,14 +1,14 @@
 <template>
   <div class="flex flex-row justify-center flex-grow">
     <div class="prose mr-4 p-8 bg-white rounded-md min-w-[20ch] flex flex-col">
-      <h3 class="text-xl font-bold mb-5">Chapters</h3>
+      <h3 class="font-bold mb-5">Chapters</h3>
       <!-- All the lessons for the course listed here -->
       <div
         class="space-y-1 mb-4 flex flex-col"
         v-for="chapter in chapters"
         :key="chapter.slug"
       >
-        <h4 class="text-lg font-semibold">{{ chapter.title }}</h4>
+        <h4 class="font-semibold">{{ chapter.title }}</h4>
         <NuxtLink
           v-for="(lesson, index) in chapter.lessons"
           :key="lesson.slug"
@@ -20,7 +20,7 @@
           }"
         >
           <span class="text-gray-500">{{ index + 1 }}.</span>
-          <span class="link link-hover">{{ lesson.title }}</span>
+          <span>{{ lesson.title }}</span>
         </NuxtLink>
       </div>
     </div>

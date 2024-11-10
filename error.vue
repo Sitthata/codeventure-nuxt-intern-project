@@ -15,7 +15,7 @@
         </p>
         <p>
           Go to the
-          <span @click="handleError" class="link link-hover">first lesson</span>
+          <span @click="handleError" class="link link-hover font-bold">first lesson</span>
         </p>
       </div>
     </section>
