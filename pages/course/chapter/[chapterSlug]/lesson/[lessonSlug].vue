@@ -51,7 +51,7 @@ useHead({
   title: `${lesson.value.title} - ${chapter.value.title}`,
 });
 
-const progress = useState("progress", () => {
+const progress = useLocalStorage("progress", () => {
   return [];
 });
 
