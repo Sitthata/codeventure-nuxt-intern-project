@@ -3,7 +3,7 @@
     <p class="mt-0 uppercase font-bold text-slate-400 mb-1">
       Lesson {{ chapter.number }} - {{ lesson.number }}
     </p>
-    <h2 class="my-0 text-xl font-bold">{{ lesson.title }}</h2>
+    <h2 class="my-0 font-bold">{{ lesson.title }}</h2>
     <div class="flex space-x-4 mt-2 mb-8">
       <NuxtLink
         v-if="lesson.sourceUrl"
@@ -37,10 +37,6 @@
 const course = useCourse();
 const route = useRoute();
 
-if (route.params.lessonSlug === "3-typing-component-events") {
-  console.log(route.params.notexist.captitalized());
-}
-
 const chapter = computed(() => {
   return course.chapters.find(
     (chapter) => chapter.slug === route.params.chapterSlug
@@ -52,6 +48,13 @@ const lesson = computed(() => {
     (lesson) => lesson.slug === route.params.lessonSlug
   );
 });
+
+if (!chapter.value || !lesson.value) {
+  throw createError({
+    statusCode: 404,
+    message: "Lesson not found",
+  });
+}
 
 useHead({
   title: `${lesson.value.title} - ${chapter.value.title}`,
