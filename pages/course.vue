@@ -52,8 +52,16 @@ definePageMeta({
   layout: "default",
 });
 
-const resetError = (error: any) => {
+const resetError = async (error: any) => {
+  // Avoid loop
+  await navigateTo(
+    `/course/chapter/1-chapter-1/lesson/1-introduction-to-typescript-with-vue-js-3`
+  );
   error.value = null;
+  // throw createError({
+  //   fatal: true,
+  //   message: "Fatal Error",
+  // });
 };
 </script>
 

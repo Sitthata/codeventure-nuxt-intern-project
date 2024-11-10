@@ -37,6 +37,10 @@
 const course = useCourse();
 const route = useRoute();
 
+if (route.params.lessonSlug === "3-typing-component-events") {
+  console.log(route.params.notexist.captitalized());
+}
+
 const chapter = computed(() => {
   return course.chapters.find(
     (chapter) => chapter.slug === route.params.chapterSlug
