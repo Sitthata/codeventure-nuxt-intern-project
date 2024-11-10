@@ -23,10 +23,12 @@
     <VideoPlayer v-if="lesson.videoId" :videoId="lesson.videoId" />
     <div>
       <p class="mb-4">{{ lesson.text }}</p>
-      <LessonCompleteButton
-        :model-value="isLessonCompleted"
-        @update:model-value="toggleCompleted"
-      />
+      <ClientOnly>
+        <LessonCompleteButton
+          :model-value="isLessonCompleted"
+          @update:model-value="toggleCompleted"
+        />
+      </ClientOnly>
     </div>
   </div>
 </template>
@@ -51,9 +53,7 @@ useHead({
   title: `${lesson.value.title} - ${chapter.value.title}`,
 });
 
-const progress = useLocalStorage("progress", () => {
-  return [];
-});
+const progress = useLocalStorage("progress", []);
 
 const isLessonCompleted = computed(() => {
   const chapterIndex = chapter.value.number - 1;
