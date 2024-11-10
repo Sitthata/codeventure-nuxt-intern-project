@@ -24,15 +24,37 @@
         </NuxtLink>
       </div>
     </div>
-    <NuxtPage />
+    <NuxtErrorBoundary>
+      <NuxtPage />
+      <template #error="{ error }">
+        <div class="prose p-8 bg-white rounded-md min-w-[20ch]">
+          <h3 class="text-xl font-bold mb-5">
+            Oh no, Something wrong with the lesson!
+          </h3>
+          <code>{{ error }}</code>
+          <div>
+            <button
+              class="hover:cursor-pointer bg-gray-500 text-white font-bold py-1 px-3 rounded"
+              @click="resetError(error)"
+            >
+              Reset
+            </button>
+          </div>
+        </div>
+      </template>
+    </NuxtErrorBoundary>
   </div>
 </template>
 
 <script setup lang="ts">
 const { chapters } = useCourse();
 definePageMeta({
-  layout: 'default',
+  layout: "default",
 });
+
+const resetError = (error: any) => {
+  error.value = null;
+};
 </script>
 
 <style scoped></style>
