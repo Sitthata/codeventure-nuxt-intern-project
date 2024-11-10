@@ -24,6 +24,7 @@ const logout = async () => {
     console.error("Error logging in with Github", error);
   }
 
+  // Nuxt supabase error
   try {
     await $fetch("/api/_supabase/session", {
       method: "POST",
