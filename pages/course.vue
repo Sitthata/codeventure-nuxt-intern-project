@@ -28,8 +28,8 @@
             class="flex flex-row space-x-1 prose-sm font-normal py-1 px-4 -mx-4"
             :to="lesson.path"
             :class="{
-              'text-blue-500': lesson.path === $route.fullPath, 
-              'text-gray-600': lesson.path !== $route.fullPath
+              'text-blue-500': lesson.path === $route.fullPath,
+              'text-gray-600': lesson.path !== $route.fullPath,
             }"
           >
             <span class="text-gray-500">{{ index + 1 }}.</span>
@@ -37,9 +37,7 @@
           </NuxtLink>
         </div>
       </div>
-      <div class="prose p-12 bg-white rounded-md max-w-[75ch]">
-        <NuxtPage />
-      </div>
+      <NuxtPage />
     </div>
   </div>
 </template>
@@ -48,5 +46,4 @@
 const { chapters } = useCourse();
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

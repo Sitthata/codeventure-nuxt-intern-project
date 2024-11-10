@@ -1,7 +1,7 @@
 <template>
   <div class="p-5 bg-zinc-50">
-    <h2 class="text-3xl">{{ count }}</h2>
-    <button class="btn" @click="increment">+</button>
+    <h2 class="text-3xl">Welcome</h2>
+    <NuxtLink class="btn" :to="`/course`"> My Lesson </NuxtLink>
   </div>
 </template>
 
