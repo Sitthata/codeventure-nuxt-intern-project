@@ -1,14 +1,13 @@
 <template>
-  <div class="p-5 bg-zinc-50">
+  <div class="p-5">
     <h2 class="text-3xl">Welcome</h2>
-    <NuxtLink class="btn" :to="`/course`"> My Lesson </NuxtLink>
+    <div class="flex gap-2">
+      <NuxtLink class="btn" :to="firstLesson.path">Get Started!</NuxtLink>
+      <NuxtLink class="btn btn-outline" :to="`/login`">Login </NuxtLink>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const count = ref<number>(0);
-
-function increment() {
-  count.value++;
-}
+const firstLesson = useFirstLesson();
 </script>
