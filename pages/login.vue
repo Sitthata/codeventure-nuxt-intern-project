@@ -1,19 +1,22 @@
 <template>
   <div class="prose w-full max-w-2xl h-9">
     <h1>Log in to {{ title }}</h1>
-    <button
-      @click="login"
-      class="bg-blue-500 text-white font-bold py-2 px-4 rounded"
-    >
-      Log in with Github
-    </button>
+    <div class="space-x-4">
+      <button
+        @click="login"
+        class="btn bg-blue-500 text-white hover:bg-transparent hover:text-black"
+      >
+        Log in with Github
+      </button>
+      <NuxtLink to="/" class="btn btn-outline no-underline"
+        >Back to home
+      </NuxtLink>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
 const { title } = useCourse();
 const { query } = useRoute();
-const user = useSupabaseUser();
-
 const supabase = useSupabaseClient();
 
 const login = async () => {
