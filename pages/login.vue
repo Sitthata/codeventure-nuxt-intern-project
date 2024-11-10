@@ -11,12 +11,19 @@
 </template>
 <script setup lang="ts">
 const { title } = useCourse();
+const { query } = useRoute();
+const user = useSupabaseUser();
 
 const supabase = useSupabaseClient();
 
 const login = async () => {
+  localStorage.setItem("redirectTo", (query.redirectTo as string) || "/");
+  const redirectPath = `${window.location.origin}/auth/callback`;
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "github",
+    options: {
+      redirectTo: redirectPath,
+    },
   });
 
   if (error) {
