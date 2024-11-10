@@ -1,11 +1,12 @@
 <template>
   <div>
-    <div class="prose mb-12">
-      <NuxtLink to="/" class="no-underline">
-        <h1 class="text-3xl link link-hover">
-          {{ title }}
-        </h1>
-      </NuxtLink>
+    <div class="mb-4 flex justify-between flex-grow items-center w-full">
+        <NuxtLink to="/" class="no-underline">
+          <h1 class="text-3xl font-bold link link-hover">
+            {{ title }}
+          </h1>
+        </NuxtLink>
+        <UserCard />
     </div>
     <div class="flex flex-row justify-center flex-grow">
       <div
