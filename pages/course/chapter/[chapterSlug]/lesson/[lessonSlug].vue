@@ -1,7 +1,7 @@
 <template>
   <div class="prose p-12 bg-white rounded-md max-w-[75ch]">
     <p class="mt-0 uppercase font-bold text-slate-400 mb-1">
-      Lesson {{ chapter.number }} - {{ lesson.number }}
+      Lesson {{ chapter!.number }} - {{ lesson.number }}
     </p>
     <h2 class="my-0 font-bold">{{ lesson.title }}</h2>
     <div class="flex space-x-4 mt-2 mb-8">
@@ -33,11 +33,11 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const course = await useCourse();
 const route = useRoute();
 const { chapterSlug, lessonSlug } = route.params;
-const lesson = await useLesson(chapterSlug, lessonSlug);
+const lesson = await useLesson(chapterSlug as string, lessonSlug as string);
 
 definePageMeta({
   middleware: [
@@ -57,7 +57,7 @@ definePageMeta({
         );
       }
 
-      const lesson = chapter.value.lessons.find(
+      const lesson = chapter.lessons.find(
         (lesson) => lesson.slug === params.lessonSlug
       );
 
@@ -75,20 +75,21 @@ definePageMeta({
 });
 
 const chapter = computed(() => {
-  return course.chapters.find(
+  return course.value?.chapters.find(
     (chapter) => chapter.slug === route.params.chapterSlug
   );
 });
 
-const title = computed(() => `${lesson.value.title} - ${chapter.value.title}`);
+const title = computed(() => `${lesson.value.title} - ${chapter.value?.title}`);
 
 useHead({
   title,
 });
 
-const progress = useLocalStorage("progress", []);
+const progress = useLocalStorage<boolean[][]>("progress", []);
 
 const isLessonCompleted = computed(() => {
+  if (!chapter.value) return;
   const chapterIndex = chapter.value.number - 1;
   const lessonIndex = lesson.value.number - 1;
   if (!progress.value[chapterIndex]) {
@@ -103,6 +104,8 @@ const isLessonCompleted = computed(() => {
 });
 
 const toggleCompleted = () => {
+  if (!chapter.value) return;
+
   const chapterIndex = chapter.value.number - 1;
   const lessonIndex = lesson.value.number - 1;
 
