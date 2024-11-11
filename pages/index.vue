@@ -6,6 +6,9 @@
       <NuxtLink class="btn btn-outline" :to="`/login`">Login </NuxtLink>
     </div>
   </div>
+  <div>
+    <h1>{{ firstLesson }}</h1>
+  </div>
 </template>
 
 <script setup lang="ts">

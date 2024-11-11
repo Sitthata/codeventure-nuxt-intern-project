@@ -44,7 +44,7 @@ definePageMeta({
     async function ({ params }, from) {
       const course = await useCourse();
 
-      const chapter = course.value.chapters.find(
+      const chapter = course.value?.chapters.find(
         (chapter) => chapter.slug === params.chapterSlug
       );
 
@@ -57,7 +57,7 @@ definePageMeta({
         );
       }
 
-      const lesson = chapter.value.lessons.find(
+      const lesson = chapter.lessons.find(
         (lesson) => lesson.slug === params.lessonSlug
       );
 
