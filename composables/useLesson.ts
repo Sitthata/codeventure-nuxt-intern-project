@@ -1,6 +1,12 @@
 export default async (chapterSlug: string, lessonSlug: string) => {
-  const path = `/api/course/chapter/${chapterSlug}/lesson/${lessonSlug}`;
-  const { data, error } = await useFetch(path);
+    const { data, error } = await useFetch(
+      `/api/course/chapter/${chapterSlug}/lesson/${lessonSlug}`
+    );
+
+  // Another equivalent way to fetch data
+//   const { data, error } = await useAsyncData(() => 
+//     $fetch(`/api/course/chapter/${chapterSlug}/lesson/${lessonSlug}`)
+//   );
 
   if (error.value) {
     throw createError({
