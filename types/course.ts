@@ -6,7 +6,6 @@ export type Lesson = {
   videoId: number;
   text: string;
   sourceUrl?: string;
-  path?: string
 };
 
 export type LessonWithPath = Lesson & {
