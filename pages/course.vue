@@ -66,9 +66,7 @@ definePageMeta({
 
 const resetError = async (error: any) => {
   // Avoid loop
-  await navigateTo(
-    `/course/chapter/1-chapter-1/lesson/1-introduction-to-typescript-with-vue-js-3`
-  );
+  await navigateTo(firstLesson.path);
   error.value = null;
   // throw createError({
   //   fatal: true,

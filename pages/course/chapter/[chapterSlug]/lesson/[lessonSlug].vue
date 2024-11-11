@@ -57,7 +57,7 @@ definePageMeta({
         );
       }
 
-      const lesson = chapter.lessons.find(
+      const lesson = chapter.value.lessons.find(
         (lesson) => lesson.slug === params.lessonSlug
       );
 
@@ -75,7 +75,7 @@ definePageMeta({
 });
 
 const chapter = computed(() => {
-  return course.value?.chapters.find(
+  return course.chapters.find(
     (chapter) => chapter.slug === route.params.chapterSlug
   );
 });
