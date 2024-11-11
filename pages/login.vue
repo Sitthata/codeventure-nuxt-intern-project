@@ -18,19 +18,27 @@
 const { title } = useCourse();
 const { query } = useRoute();
 const supabase = useSupabaseClient();
+const user = useSupabaseUser();
+
+watchEffect(async () => {
+  if (user.value) {
+    await navigateTo(query.redirectTo as string, {
+      replace: true,
+    });
+  }
+});
 
 const login = async () => {
-  localStorage.setItem("redirectTo", (query.redirectTo as string) || "/");
-  const redirectPath = `${window.location.origin}/auth/callback`;
+  const queryParams =
+    query.redirectTo !== undefined ? `?redirectTo=${query.redirectTo}` : "";
+  const redirectTo = `${window.location.origin}/confirm${queryParams}`;
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "github",
-    options: {
-      redirectTo: redirectPath,
-    },
+    options: { redirectTo },
   });
 
   if (error) {
-    console.error("Error logging in with Github", error);
+    console.error(error);
   }
 };
 </script>
