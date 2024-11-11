@@ -34,17 +34,17 @@
 </template>
 
 <script setup>
-const course = useCourse();
+const course = await useCourse();
 const route = useRoute();
 const { chapterSlug, lessonSlug } = route.params;
 const lesson = await useLesson(chapterSlug, lessonSlug);
 
 definePageMeta({
   middleware: [
-    function ({ params }, from) {
-      const course = useCourse();
+    async function ({ params }, from) {
+      const course = await useCourse();
 
-      const chapter = course.chapters.find(
+      const chapter = course.value.chapters.find(
         (chapter) => chapter.slug === params.chapterSlug
       );
 
@@ -57,7 +57,7 @@ definePageMeta({
         );
       }
 
-      const lesson = chapter.lessons.find(
+      const lesson = chapter.value.lessons.find(
         (lesson) => lesson.slug === params.lessonSlug
       );
 
@@ -75,13 +75,15 @@ definePageMeta({
 });
 
 const chapter = computed(() => {
-  return course.chapters.find(
+  return course.value?.chapters.find(
     (chapter) => chapter.slug === route.params.chapterSlug
   );
 });
 
+const title = computed(() => `${lesson.value.title} - ${chapter.value.title}`);
+
 useHead({
-  title: `${lesson.value.title} - ${chapter.value.title}`,
+  title,
 });
 
 const progress = useLocalStorage("progress", []);

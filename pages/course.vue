@@ -3,7 +3,7 @@
     <div class="mb-4 flex justify-between flex-grow items-center w-full">
         <NuxtLink to="/" class="no-underline">
           <h1 class="text-3xl font-bold link link-hover">
-            {{ title }}
+            {{ course.title }}
           </h1>
         </NuxtLink>
         <UserCard />
@@ -16,7 +16,7 @@
         <!-- All the lessons for the course listed here -->
         <div
           class="space-y-1 mb-4 flex flex-col"
-          v-for="chapter in chapters"
+          v-for="chapter in course.chapters"
           :key="chapter.slug"
         >
           <h4 class="font-semibold">{{ chapter.title }}</h4>
@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-const { chapters, title } = useCourse();
+const course = await useCourse();
 definePageMeta({
   layout: "default",
 });

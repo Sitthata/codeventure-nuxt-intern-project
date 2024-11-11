@@ -7,7 +7,7 @@ export default async <T>(url: string) => {
   });
 
   if (!cached.value) {
-    const { data, error } = useFetch<T>(url);
+    const { data, error } = await useFetch<T>(url);
 
     if (error.value) {
       throw createError({
