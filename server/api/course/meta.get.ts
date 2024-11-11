@@ -1,35 +1,26 @@
-import course from "~/server/courseData";
-import {
-  Course,
-  Chapter,
-  CourseMeta,
-  OutlineChapter,
-  OutlineLesson,
-} from "~/types/course";
+import { PrismaClient } from "@prisma/client";
 
-course as Course;
+const prisma = new PrismaClient();
 
-export default defineEventHandler((event): CourseMeta => {
-  const outline: OutlineChapter[] = course.chapters.reduce(
-    (prev: OutlineChapter[], next: Chapter) => {
-      const lessons: OutlineLesson[] = next.lessons.map((lesson) => ({
-        title: lesson.title,
-        slug: lesson.slug,
-        number: lesson.number,
-        path: `/course/chapter/${next.slug}/lesson/${lesson.slug}`,
-      }));
-      const chapter: OutlineChapter = {
-        title: next.title,
-        slug: next.slug,
-        number: next.number,
-        lessons,
-      };
-      return [...prev, chapter];
+export default defineEventHandler(async (event) => {
+  const course = await prisma.course.findFirst({
+    select: {
+      title: true,
+      chapters: {
+        select: {
+          title: true,
+          slug: true,
+          number: true,
+          lessons: {
+            select: {
+              title: true,
+              slug: true,
+              number: true,
+            },
+          },
+        },
+      },
     },
-    []
-  );
-  return {
-    title: course.title,
-    chapters: outline,
-  };
+  });
+  return course;
 });
