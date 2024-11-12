@@ -12,12 +12,20 @@
       error detection and autocompletion, as well as provide type safe code
       that's easier to reason about and refactor.
     </div>
-    <button
-      class="bg-yellow-400 hover:bg-yellow-500 transition px-8 py-4 w-80 text-xl font-bold rounded-lg"
-      @click="() => (showPayment = !showPayment)"
-    >
-      Buy Now
-    </button>
+    <div class="space-x-5">
+      <button
+        class="bg-yellow-400 hover:bg-yellow-500 transition px-8 py-4 w-80 text-xl font-bold rounded-lg"
+        @click="() => (showPayment = !showPayment)"
+      >
+        Buy Now
+      </button>
+      <NuxtLink
+        :to="firstLesson.path"
+        class="outline outline-1 outline-yellow-500 hover:bg-yellow-500 transition px-8 py-4 w-80 text-xl font-bold rounded-lg"
+      >
+        Course Demo
+      </NuxtLink>
+    </div>
   </Section>
   <Section title="What You'll Learn">
     <ul class="text-2xl font-medium space-y-6">
@@ -67,6 +75,7 @@
 </template>
 <script setup lang="ts">
 const course = await useCourse();
+const firstLesson = await useFirstLesson();
 
 const learningOutcomes = [
   "Hands-On Experience with the Benefits of TypeScript",
