@@ -67,6 +67,7 @@
 </template>
 <script setup lang="ts">
 const course = await useCourse();
+
 const learningOutcomes = [
   "Hands-On Experience with the Benefits of TypeScript",
   "How to make the most out of your IDE",
