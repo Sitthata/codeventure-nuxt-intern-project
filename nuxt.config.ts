@@ -3,10 +3,11 @@ export default defineNuxtConfig({
   runtimeConfig: {
     supabaseUrl: process.env.SUPABASE_URL,
     supabaseKey: process.env.SUPABASE_KEY,
-    stripeSecret: '',
+    stripeSecret: "",
     public: {
-      stripeKey: ''
-    }
+      stripeKey: "",
+    },
+    stripeWebhookSecret: "",
   },
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
