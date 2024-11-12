@@ -56,6 +56,7 @@ const stripe = ref(null);
 const email = ref("");
 const processingPayment = ref(false);
 const success = ref(false);
+const paymentIntentId = ref(null);
 
 const formStyle = {
   base: {
@@ -112,6 +113,7 @@ const handleSubmit = async () => {
 
     if (response.paymentIntent.status === "succeeded") {
       success.value = true;
+      paymentIntentId.value = response.paymentIntent.id;
     }
   } catch (e) {
     console.log(e);
@@ -119,6 +121,15 @@ const handleSubmit = async () => {
     processingPayment.value = false;
   }
 };
+
+const login = async () => {
+  if (!paymentIntentId.value) {
+    return;
+  }
+
+  const redirectTo = `/linkWithPurchase/${paymentIntentId.value}`;
+  await navigateTo(`/login?redirectTo=${redirectTo}`)
+}
 
 useHead({
   script: [
