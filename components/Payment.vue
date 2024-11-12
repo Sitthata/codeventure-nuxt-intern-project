@@ -1,7 +1,7 @@
 <template>
   <Modal @close="$emit('close')">
     <div class="bg-slate-200 p-8 rounded-xl w-full max-w-2xl">
-      <form>
+      <form @submit.prevent="handleSubmit">
         <h2 class="font-bold text-xl text-center">Buying {{ course.title }}</h2>
         <div class="mt-8 text-base width bg-white py-6 px-8 rounded shadow-md">
           <div class="w-full flex justify-between items-center mb-8">
@@ -21,7 +21,7 @@
         <button
           class="font-sans mt-4 w-full text-lg text-black h-12 px-16 rounded focus:outline-none focus:shadow-outline font-bold flex items-center justify-center transition bg-yellow-300 hover:bg-yellow-200 cursor-pointer"
         >
-          <div @click="handleSubmit">Pay $97</div>
+          <div>Pay $97</div>
         </button>
       </form>
     </div>
