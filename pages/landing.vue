@@ -3,8 +3,8 @@
     <h1 class="text-7xl font-black text-blue-500 m-0 p-0">
       {{ course.title }}
     </h1>
-    <img
-      :src="screenshots[2]"
+    <NuxtImg
+      src="images/screen1.png"
       class="w-full rounded-lg shadow-lg border-2 border-slate-200"
     />
     <div class="text-2xl font-medium">
@@ -29,7 +29,7 @@
   </Section>
   <Section title="Screenshots">
     <div class="flex flex-row flex-wrap relative my-12">
-      <img
+      <NuxtImg
         v-for="image in screenshots"
         :src="image"
         class="w-1/2 rounded-xl shadow-xl border-4 border-slate-200 even:rotate-2 even:hover:-rotate-2 odd:-rotate-2 odd:hover:rotate-2 transition"
@@ -63,10 +63,11 @@
       </li>
     </ul>
   </Section>
-  <Payment v-if="showPayment" @close="showPayment = false" />
+  <LazyPayment v-if="showPayment" @close="showPayment = false" />
 </template>
 <script setup lang="ts">
 const course = await useCourse();
+
 const learningOutcomes = [
   "Hands-On Experience with the Benefits of TypeScript",
   "How to make the most out of your IDE",
