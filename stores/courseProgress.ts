@@ -8,7 +8,7 @@ interface CourseProgress {
 
 export const useCourseProgress = defineStore("courseProgress", () => {
   // Initialize progress from local storage
-  const progress = useLocalStorage<CourseProgress>("progress", {});
+  const progress = ref<CourseProgress>({});
   const initialized = ref(false);
 
   async function initialize() {
@@ -44,6 +44,21 @@ export const useCourseProgress = defineStore("courseProgress", () => {
     };
 
     // TODO: Update in DB (lesson 6-4)
+    try {
+      await $fetch(`/api/course/chapter/${chapter}/lesson/${lesson}/progress`, {
+        method: "POST",
+        body: {
+          completed: !currentProgress,
+        },
+      });
+    } catch (error) {
+      console.error(error);
+      // revert if request fails
+      progress.value[chapter] = {
+        ...progress.value[chapter],
+        [lesson]: currentProgress,
+      };
+    }
   };
 
   return {

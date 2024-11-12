@@ -20,6 +20,9 @@ export default defineEventHandler(async (event) => {
       slug: lessonSlug,
       Chapter: { slug: chapterSlug },
     },
+    include: {
+      LessonProgress: true,
+    },
   });
 
   if (!lesson) {
