@@ -4,12 +4,10 @@ import protectRoute from "~/server/utils/protectRoute";
 const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
-  if (
-    event.context.params &&
-    event.context.params.chapterSlug !== "1-chapter-1"
-  ) {
-    protectRoute(event);
-  }
+  assertMethod(event, ["PUT", "PATCH", "POST"]);
+
+  protectRoute(event);
+
   const { chapterSlug, lessonSlug } = event.context.params as {
     chapterSlug: string;
     lessonSlug: string;
@@ -20,9 +18,6 @@ export default defineEventHandler(async (event) => {
       slug: lessonSlug,
       Chapter: { slug: chapterSlug },
     },
-    include: {
-      LessonProgress: true,
-    },
   });
 
   if (!lesson) {
@@ -32,8 +27,31 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  return {
-    ...lesson,
-    path: `/course/chapter/${chapterSlug}/lesson/${lessonSlug}`,
-  };
+  const { completed } = await readBody(event);
+
+  const {
+    user: { email: userEmail },
+  } = event.context;
+
+  return prisma.lessonProgress.upsert({
+    where: {
+      lessonId_userEmail: {
+        lessonId: lesson.id,
+        userEmail,
+      },
+    },
+    update: {
+      completed,
+    },
+    create: {
+      LessonId: lesson.id,
+      completed,
+      userEmail,
+      Lesson: {
+        connect: {
+          id: lesson.id,
+        },
+      },
+    },
+  });
 });

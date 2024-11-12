@@ -24,20 +24,27 @@
     <div>
       <p class="mb-4">{{ lesson.text }}</p>
       <LessonCompleteButton
-        :model-value="isLessonCompleted"
-        @update:model-value="
-          throw createError('Could not update lesson completion status');
-        "
+        v-if="user"
+        :model-value="isCompleted"
+        @update:model-value="courseStore.toggleComplete"
       />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useCourseProgress } from "~/stores/courseProgress";
 const course = await useCourse();
 const route = useRoute();
-const { chapterSlug, lessonSlug } = route.params;
+const { chapterSlug, lessonSlug } = route.params as {
+  chapterSlug: string;
+  lessonSlug: string;
+};
 const lesson = await useLesson(chapterSlug as string, lessonSlug as string);
+const user = useSupabaseUser();
+const courseStore = useCourseProgress();
+
+courseStore.initialize();
 
 definePageMeta({
   middleware: [
@@ -74,6 +81,10 @@ definePageMeta({
   ],
 });
 
+const isCompleted = computed(() => {
+  return courseStore.progress?.[chapterSlug]?.[lessonSlug] || false;
+});
+
 const chapter = computed(() => {
   return course.value?.chapters.find(
     (chapter) => chapter.slug === route.params.chapterSlug
@@ -85,36 +96,6 @@ const title = computed(() => `${lesson.value.title} - ${chapter.value?.title}`);
 useHead({
   title,
 });
-
-const progress = useLocalStorage<boolean[][]>("progress", []);
-
-const isLessonCompleted = computed(() => {
-  if (!chapter.value) return;
-  const chapterIndex = chapter.value.number - 1;
-  const lessonIndex = lesson.value.number - 1;
-  if (!progress.value[chapterIndex]) {
-    return false;
-  }
-
-  if (!progress.value[chapterIndex][lessonIndex]) {
-    return false;
-  }
-
-  return progress.value[chapterIndex][lessonIndex];
-});
-
-const toggleCompleted = () => {
-  if (!chapter.value) return;
-
-  const chapterIndex = chapter.value.number - 1;
-  const lessonIndex = lesson.value.number - 1;
-
-  if (!progress.value[chapterIndex]) {
-    progress.value[chapterIndex] = [];
-  }
-
-  progress.value[chapterIndex][lessonIndex] = !isLessonCompleted.value;
-};
 </script>
 
 <style scoped></style>
