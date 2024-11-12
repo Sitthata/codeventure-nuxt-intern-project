@@ -9,5 +9,8 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  middleware: ["redirect"],
+});
 const firstLesson = await useFirstLesson();
 </script>
