@@ -1,5 +1,3 @@
-import course from "~/server/courseData";
-
 export default defineEventHandler((event) => {
   const params = event.context.params;
   if (!params) {
