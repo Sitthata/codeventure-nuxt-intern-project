@@ -57,12 +57,10 @@ definePageMeta({
       );
 
       if (!chapter) {
-        return abortNavigation(
-          createError({
-            statusCode: 404,
-            message: "Chapter not found",
-          })
-        );
+        throw createError({
+          statusCode: 404,
+          message: "Chapter not found",
+        });
       }
 
       const lesson = chapter.lessons.find(
@@ -70,12 +68,10 @@ definePageMeta({
       );
 
       if (!lesson) {
-        return abortNavigation(
-          createError({
-            statusCode: 404,
-            message: "Lesson not found",
-          })
-        );
+        throw createError({
+          statusCode: 404,
+          message: "Lesson not found",
+        });
       }
     },
     "auth",
