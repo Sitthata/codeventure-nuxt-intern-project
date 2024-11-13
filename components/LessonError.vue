@@ -34,7 +34,7 @@ const firstLesson = await useFirstLesson();
 
 // Define the props expected by this component
 const props = defineProps<{
-  error: NuxtError;
+  error: any;
   resetError: (error: NuxtError) => void;
 }>();
 

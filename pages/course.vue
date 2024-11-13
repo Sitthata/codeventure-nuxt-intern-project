@@ -53,7 +53,7 @@
         <template #error="{ error }">
           <div class="prose p-8 bg-white rounded-md min-w-[20ch]">
             <h3 class="text-xl font-bold mb-5">
-              Oh no, Something wrong with the lesson!
+              Something went Wrong!
             </h3>
             <code>{{ error }}</code>
             <div>
@@ -73,7 +73,6 @@
 
 <script setup lang="ts">
 // import { useCourseProgress } from '~/stores/courseProgress';
-
 const user = useSupabaseUser();
 const course = await useCourse();
 const firstLesson = await useFirstLesson();

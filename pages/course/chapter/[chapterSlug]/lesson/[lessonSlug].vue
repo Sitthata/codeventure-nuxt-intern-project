@@ -40,6 +40,7 @@ const { chapterSlug, lessonSlug } = route.params as {
   chapterSlug: string;
   lessonSlug: string;
 };
+
 const lesson = await useLesson(chapterSlug as string, lessonSlug as string);
 const user = useSupabaseUser();
 const courseStore = useCourseProgress();
