@@ -15,7 +15,7 @@ export default async <T>(url: string) => {
     if (error.value) {
       throw createError({
         ...error.value,
-        statusMessage: `Could not fetch from url: ${url}`,
+        statusMessage: `Could not fetch from url: ${url} with ${error.value.statusCode}`,
       });
     }
     cached.value = data.value as T;

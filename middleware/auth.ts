@@ -7,18 +7,23 @@ export default defineNuxtRouteMiddleware(async (to) => {
     headers: useRequestHeaders(["cookie"]),
   });
 
-  if (user.value) {
-    // User is authenticated, allow navigation
+  if (to.params.chapterSlug === "1-chapter-1") {
     return;
   }
 
-  if (hasAccess.value || to.params.chapterSlug === "1-chapter-1") {
-    // Allow access to this specific chapter
+  if (user.value && hasAccess.value) {
     return;
-  } else if (user.value && !hasAccess.value) {
-    const client = useSupabaseClient();
-    await client.auth.signOut();
   }
+
+  if (user.value) {
+    return
+  }
+
+  // if (user.value && !hasAccess.value) {
+  //   const client = useSupabaseClient();
+  //   await client.auth.signOut();
+  //   return navigateTo("/login");
+  // }
 
   // Redirect unauthenticated users to the login page
   return navigateTo(`/login?redirectTo=${to.fullPath}`);

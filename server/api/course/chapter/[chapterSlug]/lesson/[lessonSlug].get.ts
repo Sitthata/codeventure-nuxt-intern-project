@@ -8,8 +8,9 @@ export default defineEventHandler(async (event) => {
     event.context.params &&
     event.context.params.chapterSlug !== "1-chapter-1"
   ) {
-    protectRoute(event);
+    await protectRoute(event);
   }
+
   const { chapterSlug, lessonSlug } = event.context.params as {
     chapterSlug: string;
     lessonSlug: string;
